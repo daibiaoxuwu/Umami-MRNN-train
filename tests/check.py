@@ -5,6 +5,8 @@
 2. The PyTorch models, loaded with the published web-demo weights, reproduce
    the original TensorFlow predictions (tests/reference_predictions.json).
 3. Exporting those models back gives byte-identical demo weight files.
+4. If you have trained models (models/), exporting them for the web demo
+   keeps their predictions unchanged.
 """
 import json
 import sys
@@ -13,6 +15,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import torch
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -43,3 +46,16 @@ with tempfile.TemporaryDirectory() as tmp:
     web_demo.export(mlp, rnn, tmp)
     assert (Path(tmp) / 'weights.bin').read_bytes() == (ROOT / 'published' / 'weights.bin').read_bytes()
 print('export reproduces the published weight file exactly')
+
+# 4. exporting newly trained models keeps their predictions
+if (ROOT / 'models' / 'mlp.pt').exists():
+    mlp, rnn = model.MLP(), model.RNN()
+    mlp.load_state_dict(torch.load(ROOT / 'models' / 'mlp.pt'))
+    rnn.load_state_dict(torch.load(ROOT / 'models' / 'rnn.pt'))
+    _, _, before = model.predict(mlp, rnn, seqs)
+    with tempfile.TemporaryDirectory() as tmp:
+        web_demo.export(mlp, rnn, tmp)
+        _, _, after = model.predict(*web_demo.load(tmp), seqs)
+    diff = np.abs(before - after).max()
+    assert diff < 1e-3, diff
+    print(f'exporting models/ for the web demo keeps predictions (max difference {diff:.1e})')
