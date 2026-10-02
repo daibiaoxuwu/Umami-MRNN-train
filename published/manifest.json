@@ -1,0 +1,94 @@
+{
+ "bp.d1.bias": {
+  "shape": [
+   256
+  ],
+  "offset": 0
+ },
+ "bp.d1.kernel": {
+  "shape": [
+   1093,
+   256
+  ],
+  "offset": 256
+ },
+ "bp.d2.bias": {
+  "shape": [
+   32
+  ],
+  "offset": 280064
+ },
+ "bp.d2.kernel": {
+  "shape": [
+   256,
+   32
+  ],
+  "offset": 280096
+ },
+ "bp.d3.bias": {
+  "shape": [
+   1
+  ],
+  "offset": 288288
+ },
+ "bp.d3.kernel": {
+  "shape": [
+   32,
+   1
+  ],
+  "offset": 288289
+ },
+ "rnn.r1.bias": {
+  "shape": [
+   32
+  ],
+  "offset": 288321
+ },
+ "rnn.r1.kernel": {
+  "shape": [
+   10,
+   32
+  ],
+  "offset": 288353
+ },
+ "rnn.r1.recurrent_kernel": {
+  "shape": [
+   32,
+   32
+  ],
+  "offset": 288673
+ },
+ "rnn.r2.bias": {
+  "shape": [
+   32
+  ],
+  "offset": 289697
+ },
+ "rnn.r2.kernel": {
+  "shape": [
+   32,
+   32
+  ],
+  "offset": 289729
+ },
+ "rnn.r2.recurrent_kernel": {
+  "shape": [
+   32,
+   32
+  ],
+  "offset": 290753
+ },
+ "rnn.d.bias": {
+  "shape": [
+   1
+  ],
+  "offset": 291777
+ },
+ "rnn.d.kernel": {
+  "shape": [
+   32,
+   1
+  ],
+  "offset": 291778
+ }
+}
